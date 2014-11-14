@@ -12,7 +12,7 @@ using namespace std;
 
 double funct(double x);
 double deriv(double x);
-double newton(int * n, double guess);
+double newton(int  n, double guess);
 
 const double accuracy = .0000001;
 
@@ -32,7 +32,7 @@ int main()
 	//start the fun
 	try
 	{
-		result = newton(& iter, initialGuess);
+		result = newton( iter, initialGuess);
 	}
 	catch (double err)
 	{
@@ -48,14 +48,21 @@ int main()
 	return 0;
 }
 
-double newton(int * n, double guess)
+double newton(int  n, double guess)
 {
-	int nextIter = *n - 1;
+
+	/*###########################################################
+	IF YOU CHANCE BELOW TO n-- IT WILL NOT COUND DOWN PROPERLY
+	BECAUSE IT SETS nextIer TO n BEFORE DECREMENTING n AND 
+	THEN PASSES nextIter AS n TO THE RECURSION. THIS WILL NOT
+	PROPERLY DECREMENT n.	
+	############################################################*/
+	int nextIter = --n;
 	double fguess, derivGuess, nextGuess;
 	fguess = funct(guess);
 	derivGuess = deriv(guess);
 
-	//cout << "n = " << *n << endl << "fguess = " << fguess << endl;
+	//cout << "n = " << n << endl;//<< "fguess = " << fguess << endl;
 
 	if (fguess == 0) // check if the guess is a root
 	{
@@ -66,7 +73,6 @@ double newton(int * n, double guess)
 	{
 		return guess;
 	}
-	//if (fabs(fguess) < accuracy)
 
 	nextGuess = guess - (fguess / derivGuess);
 
@@ -74,12 +80,12 @@ double newton(int * n, double guess)
 	{
 		return nextGuess;
 	}
-	if (*n == 0)
+	if (n == 0)
 	{
 		throw guess;
 	}
 
-	return newton(& nextIter, nextGuess);
+	return newton(nextIter, nextGuess);
 }
 
 double funct(double x)
