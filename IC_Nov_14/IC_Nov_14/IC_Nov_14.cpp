@@ -16,7 +16,7 @@ double newton(int * n, double guess);
 
 const double accuracy = .0000001;
 
-int _tmain(int argc, _TCHAR* argv[])
+int main()
 {
 
 	// declare variables used in main
@@ -56,7 +56,6 @@ double newton(int * n, double guess)
 	derivGuess = deriv(guess);
 
 	//cout << "n = " << *n << endl << "fguess = " << fguess << endl;
-
 
 	if (fguess == 0) // check if the guess is a root
 	{
