@@ -13,7 +13,7 @@
 
 
 int pTriples(int maxL);
-double piCalc(double accuracy);
+int piCalc(double accuracy);
 using namespace std;
 
 /*Question 1: A right triangle can have sides that are all integers. The set of three integer values for the 
@@ -27,12 +27,15 @@ example of “brute force” computing, but illustrates how for loops can be nested.
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int found;
-	double acc(.001);
+	double acc1(.009), acc2(.000009);
 
 	//found = pTriples(500);
 
-	cout << piCalc(acc);
+	cout << piCalc(acc1) << endl << piCalc(acc2) << endl;
 
+	cout << (piCalc(acc2)-piCalc(acc1))<< endl;
+
+	//cout << M_PI << endl;
 
 	//printf("End of loops, number of non-unique triples found = %i\n", found);
 	_getch();
@@ -65,18 +68,19 @@ int pTriples(int maxL)
 	return found;
 }
 
-double piCalc(double accuracy)
+int piCalc(double accuracy)
 {
 	int i(1);
 	double approx(4);
-
-	while (fabs( approx - M_PI) > accuracy && i < 20)
+	
+	while (fabs( approx - M_PI) > accuracy)
 	{
-		 approx += (pow(-1, i) * 4 / (3 + 2 * i));
-		printf("i = %i, approx = %d\n", i, approx);
+		approx += pow(-1, i) * 4 / (3 + 2 * (i-1));
+		//cout << fabs(approx - M_PI) << endl;
+		//printf("i = %i, approx = %f\n", i, approx);
 		++i;
 	}
 
-	return  approx;
+	return  i;
 
 }
