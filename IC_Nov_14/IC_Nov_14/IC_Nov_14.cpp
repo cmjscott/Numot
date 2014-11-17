@@ -16,7 +16,7 @@ double newton(int * n, double guess);
 
 const double accuracy = .0000001;
 
-int main()
+int in()
 {
 
 	// declare variables used in main
