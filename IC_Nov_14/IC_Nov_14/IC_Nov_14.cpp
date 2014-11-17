@@ -38,6 +38,7 @@ int main()
 	{
 		printf("No root was found using initial guess: %f\nAfter %i iterations\n", initialGuess, iter);
 		printf("Closest guess is: %f\nWith a value of: %f\n", err, funct(err));
+		result = err;
 	}
 
 	printf("Root found at x = %f\n", result);
@@ -55,30 +56,23 @@ double newton(int * n, double guess)
 	fguess = funct(guess);
 	derivGuess = deriv(guess);
 
-	//cout << "n = " << *n << endl << "fguess = " << fguess << endl;
+	//cout << "n = " << *n << endl << "fguess = " << fguess << endl; 
 
-	if (fguess == 0) // check if the guess is a root
-	{
-		//printf("Start Root found at x = %f\n", start);
-		return guess;
-	}
 	if (fabs(fguess) < accuracy)
 	{
 		return guess;
 	}
-	//if (fabs(fguess) < accuracy)
 
 	nextGuess = guess - (fguess / derivGuess);
 
 	if (fabs(nextGuess - guess) < accuracy)
 	{
-		return nextGuess;
+		return (nextGuess + guess)/2;
 	}
 	if (*n == 0)
 	{
 		throw guess;
 	}
-
 	return newton(& nextIter, nextGuess);
 }
 
