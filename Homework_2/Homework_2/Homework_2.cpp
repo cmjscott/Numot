@@ -30,10 +30,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	double acc1(.009), acc2(.000009);
 
 	//found = pTriples(500);
+	cout << pTriples(500) << endl;
+	//cout << piCalc(acc1) << endl << piCalc(acc2) << endl;
 
-	cout << piCalc(acc1) << endl << piCalc(acc2) << endl;
-
-	cout << (piCalc(acc2)-piCalc(acc1))<< endl;
+	//cout << (piCalc(acc2)-piCalc(acc1))<< endl;
 
 	//cout << M_PI << endl;
 
@@ -59,11 +59,8 @@ int pTriples(int maxL)
 				{
 					++found;
 				}
-
 			}
-
 		}
-
 	}
 	return found;
 }
