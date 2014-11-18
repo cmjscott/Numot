@@ -11,9 +11,13 @@
 #include <conio.h> //include for getch function
 #include <iomanip> //include for setprecision command
 
+const double acc1(.009), acc2(.000009);
 
 int pTriples(int maxL);
 int piCalc(double accuracy);
+double funct(double x);
+
+
 using namespace std;
 
 /*Question 1: A right triangle can have sides that are all integers. The set of three integer values for the 
@@ -27,19 +31,22 @@ example of “brute force” computing, but illustrates how for loops can be nested.
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int found;
-	double acc1(.009), acc2(.000009);
+	
+	
+	printf("PROBLEM 1:\n");
+	found = pTriples(500);
+	printf("Number of Unique triples found = %i\n\n",found );
 
-	//found = pTriples(500);
-	cout << pTriples(500) << endl;
-	//cout << piCalc(acc1) << endl << piCalc(acc2) << endl;
+	printf("PROBLEM 2:\n");
+	printf("Number of cycles required for 3 significant digits: %i\n", piCalc(acc1));
+	printf("Number of cycles required for 6 significant digits: %i\n", piCalc(acc2));
+	printf("Cycles required to add 3 significant figures of pi: %i\n\n", piCalc(acc2) - piCalc(acc1));
 
-	//cout << (piCalc(acc2)-piCalc(acc1))<< endl;
+	printf("PROBLEM 3:\n");
 
-	//cout << M_PI << endl;
 
-	//printf("End of loops, number of non-unique triples found = %i\n", found);
+
 	_getch();
-
 
 	return 0;
 }
@@ -47,21 +54,23 @@ int _tmain(int argc, _TCHAR* argv[])
 
 int pTriples(int maxL)
 {
-	int found(0);
+	int found(0), cycles(0);
 
 	for (int hyp = 1; hyp <= maxL; ++hyp) // loops through all hypotinuse values between 1 and maxL
 	{
 		for (int a = 1; a <= hyp; ++a) // for each hypotinuse value, loops through all b values 
 		{
-			for (int b = 1; b <= hyp; ++b)
+			for (int b = 1; b <= a; ++b)
 			{
 				if (sqrt(pow(a, 2) + pow(b, 2)) == hyp)
 				{
 					++found;
 				}
+				++cycles;
 			}
 		}
 	}
+	printf("pTriples complete after %i cycles.\n", cycles);
 	return found;
 }
 
@@ -77,7 +86,50 @@ int piCalc(double accuracy)
 		//printf("i = %i, approx = %f\n", i, approx);
 		++i;
 	}
-
 	return  i;
+}
 
+/*Approximate the value of the root of f(x) = 2x + x sin(x + 3) – 5 between 2.4 and 3.5. You 
+may use either method shown in class. Discuss why you chose that particular method and the 
+advantages of that particular method over the alternate choice. Show output results after 5, 50, and 
+500 iterations. */
+
+
+void bisection(int n, double start, double end)
+{
+	// declare and set variables used in function
+	int temp = n - 1;
+	double mid, fstart, fend, prod;
+	mid = (start + end) / 2;
+	fstart = funct(start);
+	fend = funct(end);
+	prod = fstart * fend;
+
+
+	if (fstart == 0 ||fend == 0 ) // check if the start point is a root
+	{
+		printf("Root found at x = %f\n", start);
+		return;
+	}
+
+	// checks if the difference between your roots falls within the accuracy and if their product is negative (a root is between them)
+	else if (fabs(fstart - fend) < .0000001 && prod < 0)
+	{
+		printf("Root found at x = %f\n", mid);
+		return;
+	}
+	else if (n == 0) // if you're out of iterations, exit
+	{
+		return;
+	}
+
+	// if you pass all the other checks above, recurse after bisecting the interval
+	bisection(temp, start, mid);
+	bisection(temp, mid, end);
+}
+
+
+double funct(double x)
+{
+	return 2 * x + x*sin(x + 3) - 5;
 }

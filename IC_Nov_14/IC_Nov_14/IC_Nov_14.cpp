@@ -12,7 +12,7 @@ using namespace std;
 
 double funct(double x);
 double deriv(double x);
-double newton(int * n, double guess);
+double newton(int n, double guess);
 
 const double accuracy = .0000001;
 
@@ -32,7 +32,8 @@ int in()
 	//start the fun
 	try
 	{
-		result = newton(& iter, initialGuess);
+		result = newton(iter, initialGuess);
+		printf("Root found at x = %f\n", result);
 	}
 	catch (double err)
 	{
@@ -41,7 +42,7 @@ int in()
 		result = err;
 	}
 
-	printf("Root found at x = %f\n", result);
+	
 	cout << "done" << endl;
 
 	_getch();
@@ -49,14 +50,12 @@ int in()
 	return 0;
 }
 
-double newton(int * n, double guess)
+double newton(int n, double guess)
 {
-	int nextIter = *n - 1;
+	int nextIter = --n;
 	double fguess, derivGuess, nextGuess;
 	fguess = funct(guess);
 	derivGuess = deriv(guess);
-
-	//cout << "n = " << *n << endl << "fguess = " << fguess << endl; 
 
 	if (fabs(fguess) < accuracy)
 	{
@@ -69,11 +68,11 @@ double newton(int * n, double guess)
 	{
 		return (nextGuess + guess)/2;
 	}
-	if (*n == 0)
+	if (n == 0)
 	{
 		throw guess;
 	}
-	return newton(& nextIter, nextGuess);
+	return newton(nextIter, nextGuess);
 }
 
 double funct(double x)
