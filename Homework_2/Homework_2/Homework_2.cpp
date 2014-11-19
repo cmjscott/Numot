@@ -11,12 +11,13 @@
 #include <conio.h> //include for getch function
 #include <iomanip> //include for setprecision command
 
-const double acc1(.009), acc2(.000009);
+const double acc1(2), acc2(5);
 
 int pTriples(int maxL);
 int piCalc(double accuracy);
 double funct(double x);
-
+double deriv(double x);
+double newton(int n, double guess);
 
 using namespace std;
 
@@ -30,20 +31,24 @@ example of “brute force” computing, but illustrates how for loops can be nested.
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	int found;
+	int found, threeSigFigPi, sixSigFigPi;
 	
 	
 	printf("PROBLEM 1:\n");
-	found = pTriples(500);
-	printf("Number of Unique triples found = %i\n\n",found );
+	//found = pTriples(500);
+	//printf("Number of Unique triples found = %i\n\n",found );
 
 	printf("PROBLEM 2:\n");
-	printf("Number of cycles required for 3 significant digits: %i\n", piCalc(acc1));
-	printf("Number of cycles required for 6 significant digits: %i\n", piCalc(acc2));
-	printf("Cycles required to add 3 significant figures of pi: %i\n\n", piCalc(acc2) - piCalc(acc1));
+	cout << M_PI << endl;
+	threeSigFigPi = piCalc(acc1);
+	sixSigFigPi = piCalc(acc2);
+	printf("Cycles required to add 3 significant figures of pi: %i\n\n", sixSigFigPi - threeSigFigPi);
 
 	printf("PROBLEM 3:\n");
-
+	cout << "Using Newton's method and an initial guess of 4\n";
+	cout << "Root estimation after 5 iterations: x = " << setprecision(15) << newton(5, 4)<< endl;
+	cout << "Root estimation after 50 iterations: x = " << setprecision(15) << newton(50, 4)<< endl;
+	cout << "Root estimation after 500 iterations: x = " << setprecision(15) << newton(500, 4)<< endl;
 
 
 	_getch();
@@ -79,13 +84,14 @@ int piCalc(double accuracy)
 	int i(1);
 	double approx(4);
 	
-	while (fabs( approx - M_PI) > accuracy)
+	while (fabs(floor(approx*pow(10, accuracy)) / pow(10, accuracy) - floor(M_PI*pow(10, accuracy)) / pow(10, accuracy)) != 0)
 	{
 		approx += pow(-1, i) * 4 / (3 + 2 * (i-1));
 		//cout << fabs(approx - M_PI) << endl;
 		//printf("i = %i, approx = %f\n", i, approx);
 		++i;
 	}
+	printf("Pi approximated as: %f\nAfter %i cycles.\n", approx, i );
 	return  i;
 }
 
@@ -93,6 +99,22 @@ int piCalc(double accuracy)
 may use either method shown in class. Discuss why you chose that particular method and the 
 advantages of that particular method over the alternate choice. Show output results after 5, 50, and 
 500 iterations. */
+
+double newton(int n, double guess)
+{
+	double fguess, derivGuess, nextGuess;
+	
+
+	for (int i = 0; i < n; ++i)
+	{
+		fguess = funct(guess);
+		derivGuess = deriv(guess);
+		nextGuess = guess - (fguess / derivGuess);
+		guess = nextGuess;
+	}
+
+	return guess;
+}
 
 
 void bisection(int n, double start, double end)
@@ -133,3 +155,10 @@ double funct(double x)
 {
 	return 2 * x + x*sin(x + 3) - 5;
 }
+
+double deriv(double x)
+{
+	return sin(x + 3) + x*cos(x + 3) + 2;
+}
+
+
