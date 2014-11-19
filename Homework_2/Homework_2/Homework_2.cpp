@@ -107,12 +107,11 @@ double newton(int n, double guess)
 
 	for (int i = 0; i < n; ++i)
 	{
-		fguess = funct(guess);
-		derivGuess = deriv(guess);
-		nextGuess = guess - (fguess / derivGuess);
+		fguess = funct(guess); // evaluate the function value at our current guess
+		derivGuess = deriv(guess); // evaluates the value of the derivative at our current guess
+		nextGuess = guess - (fguess / derivGuess); // calculates the next guess
 		guess = nextGuess;
 	}
-
 	return guess;
 }
 
