@@ -35,8 +35,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 	
 	printf("PROBLEM 1:\n");
-	//found = pTriples(500);
-	//printf("Number of Unique triples found = %i\n\n",found );
+	found = pTriples(500);
+	printf("Number of Unique triples found = %i\n\n",found );
 
 	printf("PROBLEM 2:\n");
 	cout << M_PI << endl;
@@ -114,40 +114,6 @@ double newton(int n, double guess)
 	}
 
 	return guess;
-}
-
-
-void bisection(int n, double start, double end)
-{
-	// declare and set variables used in function
-	int temp = n - 1;
-	double mid, fstart, fend, prod;
-	mid = (start + end) / 2;
-	fstart = funct(start);
-	fend = funct(end);
-	prod = fstart * fend;
-
-
-	if (fstart == 0 ||fend == 0 ) // check if the start point is a root
-	{
-		printf("Root found at x = %f\n", start);
-		return;
-	}
-
-	// checks if the difference between your roots falls within the accuracy and if their product is negative (a root is between them)
-	else if (fabs(fstart - fend) < .0000001 && prod < 0)
-	{
-		printf("Root found at x = %f\n", mid);
-		return;
-	}
-	else if (n == 0) // if you're out of iterations, exit
-	{
-		return;
-	}
-
-	// if you pass all the other checks above, recurse after bisecting the interval
-	bisection(temp, start, mid);
-	bisection(temp, mid, end);
 }
 
 
