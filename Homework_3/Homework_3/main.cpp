@@ -5,8 +5,8 @@
 #include <conio.h> //include for getch function
 #include <iomanip> //include for setprecision command
 
+void bubble(std::vector<int>* v);
 
-std::vector<int> sillySortingFUnction(std::vector<int>*);
 
 /*Write a program that sorts a series of numbers in ascending or descending order. The program should 
 prompt the user to enter a series of five different integers and ask whether the user wants the integers 
@@ -27,8 +27,6 @@ int main()
 		} while (vec.size() < 5);
 
 		std::sort(vec.begin(), vec.end());
-
-		//sortedVec = sillySortingFUnction(vec);
 		
 		for (int i = 0; i < vec.size(); ++i)
 		{
@@ -39,10 +37,15 @@ int main()
 	return 0;
 }
 
-
-std::vector<int> sillySortingFUnction(std::vector<int> _sortVector)
+void bubble(std::vector<int>* v)
 {
-	std::vector<int> sortVector = _sortVector;
-	std::sort(sortVector.begin(), sortVector.end());
-	return sortVector;
+	int temp;
+
+	for (int i = 0; i < v->size(); ++i)
+	{
+		//for (int j = )
+
+
+	}
+	
 }
