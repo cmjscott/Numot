@@ -42,10 +42,8 @@ int main()
 			ascending = false;
 		}
 
-
-		//std::sort(vec.begin(), vec.end());
 		bubble(&vec,ascending);
-
+		 
 		for (int i = 0; i < vec.size(); ++i)
 		{
 			std::cout << vec[i] << ' ';
