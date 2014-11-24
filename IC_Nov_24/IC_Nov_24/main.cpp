@@ -1,30 +1,21 @@
-#include<cmath>
-#include<vector>
+#include<cmath>// include for math
+#include<vector> // include for vector container
 #include<conio.h>
-#include<iostream>
-#include <algorithm>
+#include<iostream> // include for IO stuff
+#include <algorithm> // include for sort
 #include <iomanip> //include for setprecision command
 
-
+//function prototypes
 double maxTemp(const std::vector<double> v);
 double minTemp(const std::vector<double> v);
 double meanTemp(const std::vector<double> v);
 double medianTemp(const std::vector<double> v);
 
 
-/*Write a C++ program that prompts the user to enter 10 temperature measurements in degrees C and
-computes the maximum temperature, the minimum temperature, the mean temperature, and the
-median temperature. The measurements should be read into an array and the array should be passed
-into a minimum of three distinct functions that compute the parameters of interest (ie. mean, median,
-etc.). Results should be displayed back to the user
-*/
-
 int main()
 {
-	std::vector<double> vec, sortedVec;
+	std::vector<double> vec;
 	double inputDouble;
-	char flag;
-	bool ascending;
 
 	do
 	{
@@ -33,6 +24,7 @@ int main()
 		vec.push_back(inputDouble);
 	} while (vec.size() < 10);
 
+	//sort the vector
 	std::sort(vec.begin(), vec.end());
 
 
@@ -47,18 +39,19 @@ int main()
 
 double maxTemp(const std::vector<double> v)
 {
-	return v.back();
+	return v.back(); //return the last element of sorted array (the max)
 }
 
 double minTemp(const std::vector<double> v)
 {
-	return v.front();
+	return v.front(); // return the first element of sorted array (the min)
 }
 
 double meanTemp(const std::vector<double> v)
 {
 	double sum = 0;
 
+	//sums up all the elements
 	for (int i = 0; i < v.size(); ++i)
 	{
 		sum += v[i];
@@ -69,12 +62,17 @@ double meanTemp(const std::vector<double> v)
 double medianTemp(const std::vector<double> v)
 {
 	double median;
+	int size = v.size();
+
+	//if there are an even number of items in the vector
 	if (v.size() % 2 == 0)
 	{
-		median = v[v.size() / 2];
+		// return the average of the two middle datapoints
+		median = (v[(size/2)-1] + v[(size/2)]) / 2;
 	}
 	else{
-		median = (v[floor(v.size() / 2)] + v[ceil(v.size() / 2)]) / 2;
+		//return the center datapoint
+		median = v[floor(size / 2)];
 	}
 	return median;
 }
