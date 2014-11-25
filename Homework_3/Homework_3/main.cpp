@@ -5,8 +5,8 @@
 #include <conio.h> //include for getch function
 #include <iomanip> //include for setprecision command
 
+void bubble(std::vector<int>* v, bool ascending);
 
-std::vector<int> sillySortingFUnction(std::vector<int>*);
 
 /*Write a program that sorts a series of numbers in ascending or descending order. The program should 
 prompt the user to enter a series of five different integers and ask whether the user wants the integers 
@@ -18,6 +18,8 @@ int main()
 {
 		std::vector<int> vec, sortedVec;
 		int inputInt;
+		char flag;
+		bool ascending;
 
 		do
 		{
@@ -26,23 +28,54 @@ int main()
 			vec.push_back(inputInt);
 		} while (vec.size() < 5);
 
-		std::sort(vec.begin(), vec.end());
+		do
+		{
+			std::cout << std::endl << "Ascending (a) or Decending (d) order?\n";
+			flag = (char)_getch();
+			
+		} while (flag != 'a' && flag != 'd');
 
-		//sortedVec = sillySortingFUnction(vec);
-		
+		if (flag == 'a')
+		{
+			ascending = true;
+		} else {
+			ascending = false;
+		}
+
+		bubble(&vec,ascending);
+		 
 		for (int i = 0; i < vec.size(); ++i)
 		{
 			std::cout << vec[i] << ' ';
 		}
-
 		_getch();
 	return 0;
 }
 
-
-std::vector<int> sillySortingFUnction(std::vector<int> _sortVector)
+void bubble(std::vector<int>* v, bool _ascending)
 {
-	std::vector<int> sortVector = _sortVector;
-	std::sort(sortVector.begin(), sortVector.end());
-	return sortVector;
+	int temp;
+
+	for (int i = 0; i < v->size(); ++i)
+	{
+		for (int j = 0; j < (v->size()- i - 1); ++j)
+		{
+			if (_ascending)
+			{
+				if ((*v)[j]>(*v)[j + 1])
+				{
+					temp = (*v)[j + 1];
+					(*v)[j + 1] = (*v)[j];
+					(*v)[j] = temp;
+				}
+			}else{
+				if ((*v)[j]<(*v)[j + 1])
+				{
+					temp = (*v)[j + 1];
+					(*v)[j + 1] = (*v)[j];
+					(*v)[j] = temp;
+				}
+			}//if (_ascending)
+		}//for (int j = 0; j < (v->size()- i - 1); ++j)
+	}//for (int i = 0; i < v->size(); ++i)
 }
