@@ -21,18 +21,31 @@ int main()
 		char flag;
 		bool ascending;
 
+		//Promps the user for integer input
 		do
 		{
 			std::cout << "Please give me an integer: ";
 			std::cin >> inputInt;
+
+
+			//TODO: prevent implicit typecast to int if a double is provided to cin
+			while (std::cin.fail()) 
+			{
+				std::cout << "Error, please enter an integer." << std::endl;
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cin >> inputInt;
+			}
+
+
 			vec.push_back(inputInt);
 		} while (vec.size() < 5);
 
+		//Asks the user if they want their vector sorted in ascending or decending order
 		do
 		{
 			std::cout << std::endl << "Ascending (a) or Decending (d) order?\n";
 			flag = (char)_getch();
-			
 		} while (flag != 'a' && flag != 'd');
 
 		if (flag == 'a')
@@ -55,19 +68,21 @@ int main()
 void bubble(std::vector<int>* v, bool _ascending)
 {
 	int temp;
-
+	//Loops over the entire vector
 	for (int i = 0; i < v->size(); ++i)
 	{
 		for (int j = 0; j < (v->size()- i - 1); ++j)
 		{
 			if (_ascending)
 			{
+				// If the _ascending bool is true, sorts in ascending order
 				if ((*v)[j]>(*v)[j + 1])
 				{
 					temp = (*v)[j + 1];
 					(*v)[j + 1] = (*v)[j];
 					(*v)[j] = temp;
 				}
+				// If the _ascending bool is false, sorts in decending order
 			}else{
 				if ((*v)[j]<(*v)[j + 1])
 				{
