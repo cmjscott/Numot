@@ -17,6 +17,7 @@ int main()
 	std::vector<double> vec;
 	double inputDouble;
 
+	// Loops until there are 10 values in the vector collection
 	do
 	{
 		std::cout << "Enter temp (celsius): ";
@@ -27,7 +28,7 @@ int main()
 	//sort the vector
 	std::sort(vec.begin(), vec.end());
 
-
+	// Performs all the required actions
 	std::cout << "Maximum Temp = " << maxTemp(vec) << std::endl;
 	std::cout << "Minimum Temp = " << minTemp(vec) << std::endl;
 	std::cout << "Mean Temp = " << meanTemp(vec) << std::endl;
@@ -56,7 +57,7 @@ double meanTemp(const std::vector<double> v)
 	{
 		sum += v[i];
 	}
-	return sum / v.size();
+	return sum / v.size(); // returns the sum divided by the number of elements in the vector
 }
 
 double medianTemp(const std::vector<double> v)
