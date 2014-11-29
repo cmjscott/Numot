@@ -9,13 +9,6 @@
 
 void bubble(std::vector<int>* v, bool ascending);
 
-
-/*Write a program that sorts a series of numbers in ascending or descending order. The program should 
-prompt the user to enter a series of five different integers and ask whether the user wants the integers 
-to be sorted in ascending or descending order. The sorting should only be done by a function or 
-functions and the sorted list should be returned back to the user with the numbers displayed in 
-ascending or descending order.*/
-
 int main()
 {
 		std::vector<int> vec, sortedVec;
@@ -50,10 +43,10 @@ int main()
 
 		} while (vec.size() < 5);
 
-		//Asks the user if they want their vector sorted in ascending or decending order
+		//Asks the user if they want their vector sorted in ascending or descending order
 		do
 		{
-			std::cout << std::endl << "Ascending (a) or Decending (d) order?\n";
+			std::cout << std::endl << "Ascending (a) or Descending (d) order?\n";
 			flag = (char)_getch();
 		} while (flag != 'a' && flag != 'd');
 
@@ -94,7 +87,7 @@ void bubble(std::vector<int>* v, bool _ascending)
 					(*v)[j + 1] = (*v)[j];
 					(*v)[j] = temp;
 				}
-				// If the _ascending bool is false, sorts in decending order
+				// If the _ascending bool is false, sorts in descending order
 			}else{
 				if ((*v)[j]<(*v)[j + 1])
 				{
