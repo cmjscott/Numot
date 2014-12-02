@@ -6,7 +6,7 @@
 #include <fstream>
 
 
-double matMult(std::vector<std::vector<double> > matrix1, std::vector<std::vector<double> > matrix2);
+std::vector<std::vector<double> > matMult(std::vector<std::vector<double> > m1, std::vector<std::vector<double> > m2);
 double det(std::vector<std::vector<double> > mat);
 std::vector<std::vector<double> > getMatrix(int n);
 void outputData(std::vector<std::vector<double> > vec, std::string _fileName);
@@ -68,10 +68,22 @@ std::vector<std::vector<double> > getMatrix(int n)
 }
 
 
-double matMult(std::vector<std::vector<double> > matrix1, std::vector<std::vector<double> > matrix2)
+std::vector<std::vector<double> > matMult(std::vector<std::vector<double> > m1, std::vector<std::vector<double> > m2)
 {
+	std::vector<std::vector<double> > mat;
+	std::vector<double> row;
+	double sum(0);
 
-	return 0;
+	//get your loops right, count yo shit
+	for (int i = 0; i < m1.size(); ++i)
+	{//loop over the rows of matrix 1
+		for (int j = 0; j < m1.size(); ++j)
+		{//loops over the i'th column of matrix 2
+			sum += m1[i][j] * m2[j][i];
+		}
+		row.push_back();
+	}
+	
 }
 
 double det(std::vector<std::vector<double> > mat)
