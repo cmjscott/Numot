@@ -1,4 +1,4 @@
-#include <iostream>
+ #include <iostream>
 #include <cmath>
 #include <vector>
 #include <conio.h>
@@ -9,19 +9,14 @@
 std::vector<std::vector<double> > matMult(std::vector<std::vector<double> > m1, std::vector<std::vector<double> > m2);
 double det(std::vector<std::vector<double> > mat);
 std::vector<std::vector<double> > getMatrix(int n);
-void outputData(std::vector<std::vector<double> > vec, std::string _fileName);
-
-/*Write a program in C++ that uses 2 - D arrays to(a) compute the determinant of a 2 x 2 matrix and(b)
-multiply two 2 x 2 matrices.The program should prompt the user to enter values for the matrix entries
-and display the results back to the user.Your program should contain functions that compute the
-determinant and do the matrix multiplication.*/
+void displayMat(std::vector<std::vector<double> > mat);
 
 
 int main()
 {
-	std::vector<std::vector<double> > mat1, mat2;
+	std::vector<std::vector<double> > mat1, mat2, multResult;
 	int matSize;
-	double input;
+	double input ;
 
 
 	std::cout << "How large are your matrices? : ";
@@ -34,9 +29,19 @@ int main()
 	mat2 = getMatrix(matSize);
 
 
+	std::cout << "Matrix 1:\n";
+	displayMat(mat1);
+	std::cout << std::endl << std::endl;
 
-	
-		
+	std::cout << "Matrix 2:\n";
+	displayMat(mat2);
+	std::cout << std::endl << std::endl;
+
+	std::cout << "Matrix 1 * Matrix 2:\n";
+	displayMat(matMult(mat1, mat2));
+
+	std::cout << std::endl << "Det(Matrix 1) = " << det(mat1);
+	_getch();
 
 	return 0;
 }
@@ -87,49 +92,65 @@ std::vector<std::vector<double> > matMult(std::vector<std::vector<double> > m1, 
 				sum += m1[i][k] * m2[k][j];
 			}
 			row.push_back(sum);
+			sum = 0;
 		}
 		mat.push_back(row);
 	}
-
 	return mat;
 }
 
+void displayMat(std::vector<std::vector<double> > mat)
+{
+	for (int i = 0; i < mat.size(); ++i)//loop over the rows of matrix 1
+	{
+		for (int j = 0; j < mat[1].size(); ++j)//loops over the i'th column of matrix 2
+		{
+			if (mat[1].size() == j + 1)
+				std::cout << mat[i][j];
+			else
+				std::cout << mat[i][j] << " , ";
+		}
+		std::cout << std::endl;
+	}
+}
+
+
 double det(std::vector<std::vector<double> > mat)
 {
-	//http://nebula.deanza.edu/~bloom/math43/Determinant4x4Matrix.pdf
-	return 0;
-}
+	std::vector<std::vector<double> > subMat;
+	std::vector<double> row;
+	double sum(0);
+	int colCounter;
 
-void outputData(std::vector<std::vector<double> > vec, std::string _fileName)
-{
-	std::ofstream outfile;
-	std::string filePath = "C://Users//Colton Scott//Documents//" + _fileName + ".dat";
-
-	// open file in write mode, overwriting if file exists.
-	//Note: this could lead to loss of data and should be dealt with.
-	outfile.open(filePath.c_str(), std::ios::out | std::ios::trunc);
-
-	//just a double check if the file is open or not.
-	//TODO: write in error handling if file doesnt open or isnt open.
-	if (outfile.is_open())
+	if (mat.size() == 2)
 	{
-		std::cout << "Writing to the file" << std::endl;
-
-		// write each line to the output file as column vectors
-		for (int i = 0; i < vec[0].size(); ++i)
+		return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
+	}
+	else
+	{
+		for (int i = 0; i < mat.size(); ++i)//for each item in the first row
 		{
-			for (int j = 0; j < vec.size(); ++j)
+			subMat.clear();
+			subMat.resize(0);
+
+			for (int j = 1; j < mat.size(); ++j)//loop through remaining rows
 			{
-				outfile << vec[j][i] << ',';
+				row.clear();
+				row.resize(0);
+				colCounter = 0;
+				do
+				{
+					if (colCounter != i) // ignore the i'th column of data, since you are expanding over that item
+					{
+						row.push_back(mat[j][colCounter]);
+					}	
+					++colCounter;
+				} while (row.size() < mat.size() - 1);
+				subMat.push_back(row);
 			}
-			outfile << std::endl;
+			sum += mat[0][i] *(pow((-1), i) * det(subMat));
 		}
-		outfile << std::endl;
-
-		// close the opened file.
-		outfile.close();
-	}//if (outfile.is_open())
-
-	//sucsess message
-	std::cout << "Sucsess writing data to:" << std::endl << filePath << std::endl << std::endl;
+		return sum;
+	}
 }
+
