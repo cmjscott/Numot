@@ -4,6 +4,7 @@
 
 
 std::vector<std::vector<double> > getMatrix(int n);
+std::vector<double> gauss(std::vector<std::vector<double> > mat);
 
 /*Write a C++ program that uses 2-D arrays to solve two simultaneous equations (e.g. x + y = 2 and 5x + 7y
 = 6) using Gaussian elimination. The program should prompt the user to enter the coefficients for each
@@ -17,8 +18,6 @@ int main()
 	std::cout << "How many unknowns? : ";
 	std::cin >> nUnknowns;
 	std::cout << std::endl << std::endl;
-
-
 
 	return 0;
 }
@@ -52,4 +51,11 @@ std::vector<std::vector<double> > getMatrix(int n)
 	}
 	std::cout << std::endl;
 	return mat;
+}
+
+std::vector<double> gauss(std::vector<std::vector<double> > mat)
+{
+
+
+
 }
