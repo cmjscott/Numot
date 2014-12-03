@@ -77,30 +77,26 @@ std::vector<std::vector<double> > matMult(std::vector<std::vector<double> > m1, 
 	//get your loops right, count yo shit
 	for (int i = 0; i < m1.size(); ++i)
 	{//loop over the rows of matrix 1
-		for (int j = 0; j < m1.size(); ++j)
+		row.clear();
+		row.resize(0);
+
+		for (int j = 0; j < m2[i].size(); ++j)
 		{//loops over the i'th column of matrix 2
-			sum += m1[i][j] * m2[j][i];
+			for (int k = 0; k < m1[i].size(); ++k)
+			{
+				sum += m1[i][k] * m2[k][j];
+			}
+			row.push_back(sum);
 		}
-		row.push_back(sum);
+		mat.push_back(row);
 	}
-	
+
+	return mat;
 }
 
 double det(std::vector<std::vector<double> > mat)
 {
-	std::vector<std::vector<double> > minor;
-	std::vector<double> row;
-
-	if (mat.size() == 2)
-	{
-		return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
-	} else {
-		for (int i = 0; i < mat.size(); ++i)
-		{
-
-		}
-
-
+	//http://nebula.deanza.edu/~bloom/math43/Determinant4x4Matrix.pdf
 	return 0;
 }
 
