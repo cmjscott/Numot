@@ -5,11 +5,12 @@
 #include <algorithm>
 #include <functional>
 #include <cstring>
-
+#include <iomanip>
 
 std::vector<std::vector<double> > getMatrix(int n);
 std::vector<double> gauss(std::vector<std::vector<double> > mat);
 void printMat(double element);
+
 
 /*Write a C++ program that uses 2-D arrays to solve two simultaneous equations (e.g. x + y = 2 and 5x + 7y
 = 6) using Gaussian elimination. The program should prompt the user to enter the coefficients for each
@@ -72,42 +73,49 @@ std::vector<double> gauss(std::vector<std::vector<double> > mat)
 {
 
 
-	std::vector<double>::iterator iter; //= mat.begin() + i;
+	std::vector<double>::iterator iter, reduceIter; //= mat.begin() + i;
+	std::vector<double> results;
 	double reduceScaleFactor;
+	int rowCounter;
+	
 
 	//NOTE: mat.size() is the number of equations/unknowns. Mat[1].size() is one larger
 	for (int i = 0; i < mat.size(); ++i)// go through each row systematically
 	{
-		reduceScaleFactor = mat[i][i];
+		reduceScaleFactor = 1/mat[i][i]; //get the 1st non-zero element of the i'th vector
+		rowCounter = 0;
+
+		iter = mat[i].begin() + i; // sets the iterator to the i'th element of the i'th row
+		std::transform(iter, mat[i].end(), iter, std::bind1st(std::multiplies<double>(),reduceScaleFactor));
 		
-		for (int j = i; j < mat.size(); ++j)
-		{
-			iter = mat[j].begin() + i; // sets the iterator to the i'th element of the i'th row
-			std::transform(iter, mat[j].end(), iter, std::bind1st(std::divides<double>(),reduceScaleFactor));
-		}
 		
 
-		for_each(mat[i].begin(), mat[i].end(), printMat);
-		std::cout << std::endl;
-		/*
+		//for_each(mat[i].begin(), mat[i].end(), printMat);
+		//std::cout << std::endl << std::endl;
+
 		do
 		{
-			if (colCounter != i) // ignore the i'th column of data, since you are expanding over that item
+			if (rowCounter != i) // ignore the i'th row of data, since you are pivoting over that item
 			{
-				row.push_back(mat[j][colCounter]);
+				reduceIter = mat[rowCounter].begin() + i;
+				reduceScaleFactor = 1/mat[rowCounter][i];
+				std::transform(reduceIter, mat[rowCounter].end(), reduceIter, std::bind1st(std::multiplies<double>(), reduceScaleFactor));
+				std::transform(reduceIter, mat[rowCounter].end(), iter, reduceIter, std::minus<double>());
 			}
-			++colCounter;
-		} while (row.size() < mat.size() - 1);
-		*/
-
-
-
+			
+			//for_each(mat[rowCounter].begin(), mat[rowCounter].end(), printMat);
+			//std::cout << std::endl;
+			++rowCounter;
+		} while (rowCounter < mat.size());
+	
+		results.push_back(mat[i].back());
+		//std::cout << std::endl;
 	}
 
-
-	return mat[1];
+	return results;
 }
 
 void printMat(double element) {  // function:
-	std::cout << ' ' << element;
+	std::cout << std::fixed << std::setprecision(2) << ' ' << element;
 }
+
