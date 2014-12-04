@@ -10,6 +10,7 @@
 std::vector<std::vector<double> > getMatrix(int n);
 std::vector<double> gauss(std::vector<std::vector<double> > mat);
 void printMat(double element);
+void printVec(std::vector<double> vec);
 
 
 /*Write a C++ program that uses 2-D arrays to solve two simultaneous equations (e.g. x + y = 2 and 5x + 7y
@@ -23,16 +24,18 @@ int main()
 	std::vector<double> answers;
 	int nUnknowns;
 
-	/*
+
 	std::cout << "How many unknowns? : ";
 	std::cin >> nUnknowns;
 	std::cout << std::endl << std::endl;
-
 	equations = getMatrix(nUnknowns);
-	*/
 
-	equations = { { 2, 1, -1, 8 }, { -3, -1, 2, -11 }, { -2, 1, 2, -3 } };
-	answers = gauss(equations);
+	//Test Case
+	//equations = { { 2, 1, -1, 8 }, { -3, -1, 2, -11 }, { -2, 1, 2, -3 } };
+	printVec(gauss(equations));
+	//answers = gauss(equations);
+
+
 	_getch();
 
 	return 0;
@@ -55,7 +58,6 @@ std::vector<std::vector<double> > getMatrix(int n)
 		{
 			std::cout << "x" << (j + 1) << ": ";
 			std::cin >> input;
-			std::cout << std::endl;
 			row.push_back(input);
 		}
 		std::cout << "= ";
@@ -71,7 +73,6 @@ std::vector<std::vector<double> > getMatrix(int n)
 
 std::vector<double> gauss(std::vector<std::vector<double> > mat)
 {
-
 
 	std::vector<double>::iterator iter, reduceIter; //= mat.begin() + i;
 	std::vector<double> results;
@@ -91,7 +92,7 @@ std::vector<double> gauss(std::vector<std::vector<double> > mat)
 		
 
 		//for_each(mat[i].begin(), mat[i].end(), printMat);
-		//std::cout << std::endl << std::endl;
+		std::cout << "Operation: " << i +1 << std::endl;
 
 		do
 		{
@@ -103,19 +104,31 @@ std::vector<double> gauss(std::vector<std::vector<double> > mat)
 				std::transform(reduceIter, mat[rowCounter].end(), iter, reduceIter, std::minus<double>());
 			}
 			
-			//for_each(mat[rowCounter].begin(), mat[rowCounter].end(), printMat);
-			//std::cout << std::endl;
+			for_each(mat[rowCounter].begin(), mat[rowCounter].end(), printMat);
+			std::cout << std::endl;
 			++rowCounter;
 		} while (rowCounter < mat.size());
-	
-		results.push_back(mat[i].back());
-		//std::cout << std::endl;
+
+		std::cout << std::endl;
 	}
 
+	for (int i = 0; i < mat.size(); ++i)
+	{
+		results.push_back(mat[i].back());
+	}
+	
 	return results;
 }
 
 void printMat(double element) {  // function:
-	std::cout << std::fixed << std::setprecision(2) << ' ' << element;
+	std::cout << std::fixed << std::setprecision(3) << ' ' << element;
+}
+
+void printVec(std::vector<double> vec)
+{
+	for (int i = 0; i < vec.size(); ++i)
+	{
+		std::cout << "x" << (i + 1) << " = " << vec[i] << std::endl;
+	}
 }
 
