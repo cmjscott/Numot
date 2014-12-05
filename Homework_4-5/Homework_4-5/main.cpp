@@ -7,24 +7,38 @@
 #include <cstring>
 #include <iomanip>
 
+//for prob 1
 std::vector<std::vector<double> > getMatrix(int n);
 std::vector<double> gauss(std::vector<std::vector<double> > mat);
 void printMat(double element);
 void printVec(std::vector<double> vec);
+void prob1();
+
+// for problem 2
+double yPrime(double currY, double t);
+double euler(double t, double dt);
+void prob2();
 
 int main()
+{
+	prob1();
+	prob2();
+	return 0;
+}
+
+void prob1()
 {
 	std::vector<std::vector<double> > equations;
 	std::vector<double> answers;
 	int nUnknowns;
-
+	
+	std::cout << "Problem 1:" << std::endl;
 	std::cout << "How many unknowns? : ";
 	std::cin >> nUnknowns;
 	std::cout << std::endl << std::endl;
 	equations = getMatrix(nUnknowns);
 	printVec(gauss(equations));
 	_getch();
-	return 0;
 }
 
 std::vector<std::vector<double> > getMatrix(int n)
@@ -120,3 +134,51 @@ void printVec(std::vector<double> vec)
 	}
 }
 
+
+
+//##########################################################################################
+//
+// PROBLEM 2 CODE
+//
+//##########################################################################################
+
+
+void prob2()
+{
+	double times[4] = { .1, .2, .3, .4 };
+	double timeSteps[3] = { .1, .05, .025 };
+
+	std::cout << "Problem 2:\n-----------------------------" << std::endl;
+	for (int i = 0; i < 4; ++i) //for each t value
+	{
+		std::cout << "For t = " << times[i] << ":" << std::endl;
+		for (int j = 0; j < 3; ++j) // loop through each step
+		{
+			std::cout << "Using dt = " << timeSteps[j] << ": f(t) =	" << euler(times[i], timeSteps[j]) << std::endl;
+		}
+		std::cout << "-----------------------------" << std::endl;
+	}
+	std::cout << std::endl << "Problem 2 complete. Press any key to exit.";
+	_getch();
+}
+
+
+
+double euler(double t, double dt)
+{
+	double y(1);
+	int cycles;
+
+	cycles = t / dt;
+
+	for (int i = 0; i < cycles; ++i)
+	{
+		y = y + dt * yPrime(y, i*dt);
+	}
+	return y;
+}
+
+double yPrime(double currY, double t)
+{
+	return .5 - t + 2 * currY;
+}
