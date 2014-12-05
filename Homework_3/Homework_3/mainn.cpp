@@ -9,7 +9,7 @@
 
 void bubble(std::vector<int>* v, bool ascending);
 
-int main()
+int man()
 {
 		std::vector<int> vec, sortedVec;
 		int inputInt;
