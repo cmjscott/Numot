@@ -21,7 +21,7 @@ void prob2();
 
 int main()
 {
-	prob1();
+	//prob1();
 	prob2();
 	return 0;
 }
@@ -147,6 +147,7 @@ void prob2()
 {
 	double times[4] = { .1, .2, .3, .4 };
 	double timeSteps[3] = { .1, .05, .025 };
+	double t, dt;
 
 	std::cout << "Problem 2:\n-----------------------------" << std::endl;
 	for (int i = 0; i < 4; ++i) //for each t value
@@ -158,6 +159,13 @@ void prob2()
 		}
 		std::cout << "-----------------------------" << std::endl;
 	}
+	std::cout << std::endl << "Now you try!" << std::endl << "Enter a time value > 0: ";
+	std::cin >> t;
+	std::cout << std::endl << "Enter a dt value > 0 but smaller than your time: ";
+	std::cin >> dt;
+	std::cout << "Using dt = " << dt << ": f(t) =	" << euler(t, dt) << std::endl;
+	std::cout << "-----------------------------" << std::endl;
+
 	std::cout << std::endl << "Problem 2 complete. Press any key to exit.";
 	_getch();
 }
