@@ -163,7 +163,7 @@ void prob2()
 	std::cin >> t;
 	std::cout << std::endl << "Enter a dt value > 0 but smaller than your time: ";
 	std::cin >> dt;
-	std::cout << "Using dt = " << dt << ": f(t) =	" << euler(t, dt) << std::endl;
+	std::cout << std::endl << "Using dt = " << dt << ": f(t) =	" << euler(t, dt) << std::endl;
 	std::cout << "-----------------------------" << std::endl;
 
 	std::cout << std::endl << "Problem 2 complete. Press any key to exit.";
